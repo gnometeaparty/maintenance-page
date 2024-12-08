@@ -5,7 +5,7 @@ interface Props {
   /**
    * The estimated end time of the maintenance.
    */
-  estimatedEndDate: Date | undefined;
+  estimatedEndDate?: Date;
 }
 
 const { estimatedEndDate } = Astro.props as Props;
