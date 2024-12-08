@@ -1,0 +1,112 @@
+---
+// The layout that is used for all pages.
+
+import "~/styles/base.css";
+import "@fontsource-variable/inter/index.css";
+import { SEO } from "astro-seo";
+import { clientEnv } from "~/client-env";
+
+export interface Props {
+  /**
+   * The title of the page.
+   */
+  title: string;
+}
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+
+const resolvedImageWithDomain = new URL(
+  "/opengraph.jpg",
+  Astro.site,
+).toString();
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Fathom analytics -->
+    <script
+      is:inline
+      type="text/partytown"
+      id="fathom-script"
+      src={"https://cdn.usefathom.com/script.js"}
+      data-site={clientEnv.PUBLIC_FATHOM_SITE_ID}
+      data-honor-dnt={true}
+      defer></script>
+
+    <script is:inline>
+      const theme = (() => {
+        if (
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("theme")
+        ) {
+          return localStorage.getItem("theme");
+        }
+        // Check the system's color scheme preference.
+        if (
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+        ) {
+          return "dark";
+        }
+        return "light";
+      })();
+
+      if (theme === "light") {
+        document.documentElement.classList.remove("dark");
+      } else {
+        document.documentElement.classList.add("dark");
+      }
+
+      window.localStorage.setItem("theme", theme);
+
+      // Listen for changes in the system's color scheme preference.
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (e) => {
+          const newTheme = e.matches ? "dark" : "light";
+          if (newTheme === "dark") {
+            document.documentElement.classList.add("dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+          }
+          window.localStorage.setItem("theme", newTheme);
+        });
+    </script>
+
+    <SEO
+      title={title}
+      description={"We're working on something. We'll be back up in a bit."}
+      canonical={canonicalURL}
+      openGraph={{
+        basic: {
+          url: canonicalURL,
+          type: "website",
+          title: "Gnome Tea Party Maintenance",
+          image: resolvedImageWithDomain,
+        },
+        image: {
+          alt: "Gnome Tea Party Maintenance Page Screenshot",
+        },
+      }}
+    />
+  </head>
+  <body class="flex min-h-screen flex-col">
+    <slot />
+    <style is:global>
+      img {
+        content-visibility: auto;
+      }
+    </style>
+  </body>
+</html>

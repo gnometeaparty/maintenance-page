@@ -1,0 +1,64 @@
+---
+import { parseISO } from "date-fns";
+import { clientEnv } from "~/client-env";
+import TimeEstimate from "~/components/TimeEstimate.astro";
+import { redis } from "~/impl";
+import Layout from "~/layouts/Layout.astro";
+import { serverEnv } from "~/server-env";
+
+const endTimeResponse = await redis.hget(
+  serverEnv.REDIS_MAINTENANCE_CONFIG_KEY,
+  "endTime",
+);
+
+// Convert the time estimate to a relative time string.
+let estimatedEndDate: Date | null = null;
+if (endTimeResponse) {
+  estimatedEndDate = parseISO(endTimeResponse);
+}
+---
+
+<Layout title="Ongoing Maintenance">
+  <div class="flex min-h-screen flex-col items-center justify-center">
+    <div class="w-full max-w-lg p-8 text-center">
+      <h1 class="mb-4 text-3xl font-semibold text-primary">
+        Currently down for maintenance
+      </h1>
+      <p class="mb-2">We apologize for any inconveniences caused.</p>
+
+      <TimeEstimate estimatedEndDate={estimatedEndDate} />
+
+      <div class="mt-4 text-sm">
+        {
+          clientEnv.PUBLIC_STATUS_PAGE_URL && (
+            <p>
+              You can view the status page at{" "}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={clientEnv.PUBLIC_STATUS_PAGE_URL}
+                class="text-primary underline"
+              >
+                {clientEnv.PUBLIC_STATUS_PAGE_URL}
+              </a>
+            </p>
+          )
+        }
+
+        {
+          clientEnv.PUBLIC_CONTACT_EMAIL && (
+            <p>
+              You can contact us at{" "}
+              <a
+                href={`mailto:${clientEnv.PUBLIC_CONTACT_EMAIL}`}
+                class="text-primary underline"
+              >
+                {clientEnv.PUBLIC_CONTACT_EMAIL}
+              </a>
+            </p>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</Layout>
