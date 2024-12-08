@@ -5,13 +5,13 @@ interface Props {
   /**
    * The estimated end time of the maintenance.
    */
-  estimatedEndDate: Date | null;
+  estimatedEndDate: Date | undefined;
 }
 
 const { estimatedEndDate } = Astro.props as Props;
 
 // Convert the time estimate to a relative time string.
-let timeRemaining: string | null = null;
+let timeRemaining: string | undefined;
 if (estimatedEndDate) {
   if (isPast(estimatedEndDate)) {
     // If the estimated end time is in the past, we should be done soon.

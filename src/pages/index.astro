@@ -1,21 +1,9 @@
 ---
-import { parseISO } from "date-fns";
 import { clientEnv } from "~/client-env";
 import TimeEstimate from "~/components/TimeEstimate.astro";
-import { redis } from "~/impl";
 import Layout from "~/layouts/Layout.astro";
-import { serverEnv } from "~/server-env";
 
-const endTimeResponse = await redis.hget(
-  serverEnv.REDIS_MAINTENANCE_CONFIG_KEY,
-  "endTime",
-);
-
-// Convert the time estimate to a relative time string.
-let estimatedEndDate: Date | null = null;
-if (endTimeResponse) {
-  estimatedEndDate = parseISO(endTimeResponse);
-}
+const endTime = Astro.locals.endTime;
 ---
 
 <Layout title="Ongoing Maintenance">
@@ -26,7 +14,7 @@ if (endTimeResponse) {
       </h1>
       <p class="mb-2">We apologize for any inconveniences caused.</p>
 
-      <TimeEstimate estimatedEndDate={estimatedEndDate} />
+      <TimeEstimate estimatedEndDate={endTime} />
 
       <div class="mt-4 text-sm">
         {
