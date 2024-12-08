@@ -118,8 +118,6 @@ flowchart TD
 See [.envrc.example](.envrc.example) for the environment variables you need to set.
 
 ```bash
-# Export thes
-
 # Pull the environment information.
 VERCEL_PROJECT_ID=$VERCEL_MAINTENANCE_PAGE_PROJECT_ID vercel pull --yes --environment=production --scope=gnometeaparty --token=$VERCEL_TOKEN
 
