@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const serverEnv = createEnv({
   server: {
-    REDIS_REST_URL: z.string().min(1),
+    REDIS_URL: z.string().min(1),
     REDIS_MAINTENANCE_CONFIG_KEY: z
       .string()
       .min(1)

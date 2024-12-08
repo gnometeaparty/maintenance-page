@@ -6,7 +6,7 @@
     "lint:check": {},
     "build": {
       "env": [
-        "REDIS_REST_URL",
+        "REDIS_URL",
         "REDIS_MAINTENANCE_CONFIG_KEY",
         "PUBLIC_FATHOM_SITE_ID",
         "PUBLIC_STATUS_PAGE_URL",
@@ -16,7 +16,7 @@
     },
     "dev": {
       "env": [
-        "REDIS_REST_URL",
+        "REDIS_URL",
         "REDIS_MAINTENANCE_CONFIG_KEY",
         "PUBLIC_FATHOM_SITE_ID",
         "PUBLIC_STATUS_PAGE_URL",
