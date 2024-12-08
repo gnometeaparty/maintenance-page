@@ -9,12 +9,12 @@ This page is served from an Astro application. The time estimate is provided by 
 ```mermaid
 flowchart TD
     subgraph "Normal Operation"
-        DNS1[DNS: example.com] -->|Points to| MAIN[Main Application Server]
-        MAINT1[maintenance.example.com] -.->|Redirects to| MAIN
+        MAIN[Main Application]
+        MAINT[maintenance.example.com] -->|302 redirect to main site| MAIN
     end
 
     subgraph "During Maintenance"
-        DNS2[DNS: example.com] -->|Points to| MAINT2[maintenance.example.com]
+        MAIN2[Main Application] -->|302 redirect to maintenance site| MAINT2[maintenance.example.com]
         MAINT2 -->|Shows| MP[Maintenance Page]
         db[(Redis)] -->|Provides time estimate| MP
         STATUS[examplestatus.com] -->|Provides status updates| MP
@@ -25,9 +25,9 @@ flowchart TD
     classDef maintenance fill:#fee2e2,stroke:#333
     classDef neutral fill:#f3f4f6,stroke:#333
 
-    class MAIN normal
+    class MAIN,MAIN2 normal
     class MP,db maintenance
-    class DNS1,DNS2,MAINT1,MAINT2,STATUS neutral
+    class MAINT,MAINT2,STATUS neutral
 ```
 
 ### Use cases
