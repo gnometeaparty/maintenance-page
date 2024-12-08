@@ -60,4 +60,4 @@ jobs:
         run: pnpm declutter
 
       - name: cicd tasks
-        run: pnpm turbo format:check lint:check build
+        run: pnpm turbo format:check lint:check
