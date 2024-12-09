@@ -131,6 +131,12 @@ vercel build --prod
 VERCEL_PROJECT_ID=$VERCEL_MAINTENANCE_PAGE_PROJECT_ID vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
 ```
 
+### Revalidation
+
+The maintenance page is currently configured to revalidate every 2 minutes using Vercel's ISR feature.
+
+If desired, you can add the `bypassToken` field to the [astro.config.mjs](astro.config.mjs) Vercel ISR options for on-demand ISR.
+
 ## Additional Information
 
 For any issues or feature requests, please open an issue on the repository.
