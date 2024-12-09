@@ -5,25 +5,25 @@ interface Props {
   /**
    * The estimated end time of the maintenance.
    */
-  estimatedEndDate: Date | null;
+  endTime?: Date;
 }
 
-const { estimatedEndDate } = Astro.props as Props;
+const { endTime } = Astro.props as Props;
 
 // Convert the time estimate to a relative time string.
-let timeRemaining: string | null = null;
-if (estimatedEndDate) {
-  if (isPast(estimatedEndDate)) {
+let timeRemaining: string | undefined;
+if (endTime) {
+  if (isPast(endTime)) {
     // If the estimated end time is in the past, we should be done soon.
     timeRemaining = "very soon";
   } else {
-    const minutesLeft = differenceInMinutes(estimatedEndDate, new Date());
+    const minutesLeft = differenceInMinutes(endTime, new Date());
     if (minutesLeft < 60) {
       // If less than 60 minutes left, show more precise timing.
       timeRemaining = `in ${minutesLeft} minutes`;
     } else {
       // Otherwise, show a relative time.
-      timeRemaining = formatDistanceToNow(estimatedEndDate, {
+      timeRemaining = formatDistanceToNow(endTime, {
         addSuffix: true,
       });
     }

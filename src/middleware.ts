@@ -3,11 +3,12 @@ import { z } from "zod";
 import { redis } from "~/impl";
 import { serverEnv } from "~/server-env";
 
-export const onRequest = defineMiddleware(async (_context, next) => {
+export const onRequest = defineMiddleware(async (context, next) => {
   const config = await redis.hgetall(serverEnv.REDIS_MAINTENANCE_CONFIG_KEY);
 
-  const { enabled, redirectUrl } = z
+  const { endTime, enabled, redirectUrl } = z
     .object({
+      endTime: z.coerce.date().optional(),
       enabled: z
         .enum(["true", "false"])
         .transform((val) => val === "true")
@@ -20,6 +21,9 @@ export const onRequest = defineMiddleware(async (_context, next) => {
     // If maintenance mode is not enabled, redirect to the original URL.
     return Response.redirect(redirectUrl, 302);
   }
+
+  // If an end time is set, store it in the locals.
+  context.locals.endTime = endTime;
 
   return next();
 });
