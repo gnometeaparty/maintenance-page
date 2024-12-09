@@ -51,9 +51,9 @@ See [.env.example](.env.example).
 
 | Field       | Type              | Format            | Description                                                                                         |
 | ----------- | ----------------- | ----------------- | --------------------------------------------------------------------------------------------------- |
-| endTime     | string (optional) | ISO 8601          | The UTC timestamp when maintenance is scheduled to end                                              |
+| endTime     | string (optional) | ISO 8601          | The time when maintenance is scheduled to end.                                                      |
 | enabled     | string            | "true" or "false" | Whether maintenance mode is currently active. If false, traffic is redirected to the `redirectUrl`. |
-| redirectUrl | string            | URL               | The destination URL for redirecting traffic during maintenance                                      |
+| redirectUrl | string            | URL               | The destination URL for redirecting traffic during maintenance.                                     |
 
 ### Enabling maintenance mode
 
