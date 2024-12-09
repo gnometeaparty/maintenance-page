@@ -21,5 +21,9 @@ export default defineConfig({
     }),
   ],
 
-  adapter: vercel(),
+  adapter: vercel({
+    isr: {
+      expiration: 60 * 2, // 2 minutes
+    },
+  }),
 });
