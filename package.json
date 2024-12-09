@@ -23,7 +23,8 @@
     "astro": "astro",
     "clean": "rimraf .astro .vercel node_modules dist .turbo",
     "pre-commit-tasks": "turbo format:check lint:check build",
-    "ci:version": "changeset version && pnpm format:fix"
+    "ci:version": "changeset version && pnpm format:fix",
+    "ci:publish": "changeset tag"
   },
   "dependencies": {
     "@astrojs/partytown": "^2.1.2",
